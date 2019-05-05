@@ -1,0 +1,69 @@
+import re
+# pattern = re.compile('[a-zA-Z]')        #任意长度匹配英文字母
+# pattern = re.compile('([a-z])[a-z]([a-z])')   
+# str1 = '123abc456def789'                    #
+# result = pattern.findall(str1)
+# print(result)       #返回一个符合的列表
+
+""""
+    finditer
+"""
+# pattern = re.compile('([a-z])[a-z]([a-z])')   
+# str1 = '123abc456def789'                    
+# result = pattern.finditer (str1)    #返回一个迭代器
+# # print(result)       #返回一个符合的列表
+# for i in result:
+#     print(i.group())    #返回一个match，使用group返回一个完整的匹配结果
+#     print(i.group(1))   #返回第一个分组匹配的结果，group里放几返回就是第几个数
+
+# finditer可以返回完整的正则匹配结果，以及分组的匹配结果
+
+'''
+    split分割
+    已匹配成功部分进行切割，返回列表
+'''
+# str1 = 'one,two,three,four,five'
+# pattern = re.compile('\W+')
+# print(pattern.split(str1))
+
+# print(re.split('\W+','one,two,three,four'))
+# print(re.split('\d+','one,two,three,four'))
+
+'''
+    sub 替换
+'''
+# pattern = re.compile('\d')
+# str1 = 'one1two2three3four'
+# print(re.sub('\d','-',str1))    #传入正则，要替换成的字符，需要被替换的字符串
+
+# print(re.subn('\d','-',str1))      #返回替换结果以及替换次数
+
+'''
+    引用分组
+'''
+# str1 = 'hello 123,world 321'
+# pattern = re.compile('(\w+) (\d+)')
+# # for i in pattern.finditer(str1):
+# #     print(i.group(0))
+# #     print(i.group(1))
+# #     print(i.group(2))
+# print(pattern.sub(r'\2 ****\1',str1))    #取得分组 \1 \2
+
+'''
+    贪婪与非贪婪
+    贪婪：在整个表达式匹配成功的前提下，尽可能多的匹配
+    非贪婪：在整个表达式匹配成功的前提下，尽可能少的匹配
+'''
+str1 = 'aaa<p>hello</p>bbb<p>world</p>ccc'
+# pattern = re.compile('<p>.*</p>')    # . 匹配任意字符 * 无限次
+# print(pattern.findall(str1))         #贪婪模式
+
+# pattern = re.compile('<p>.*?</p>')    # . 匹配任意字符 * 无限次
+# print(pattern.findall(str1))          #非贪婪模式 尽可能少的匹配，遇到结束标签则结束
+
+'''
+    匹配中文字符
+'''
+str1 = '你好,hello,帅哥'
+pattern = re.compile('[\u4e00-\u9fa5]+')
+print(pattern.findall(str1))
